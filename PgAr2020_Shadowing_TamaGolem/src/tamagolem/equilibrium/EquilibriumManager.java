@@ -35,7 +35,7 @@ public class EquilibriumManager {
             int totalCount = 0;
 
             for (int j = 0; j < NUMBER_OF_ELEMENTS; j++) {
-                int maxAttack = (V / 2) + 1;
+                int maxAttack = (V / 2);
 
                 if (i == j) {
                     continue;
@@ -69,8 +69,22 @@ public class EquilibriumManager {
                     if (i == NUMBER_OF_ELEMENTS - 3) {
                         int columnSum = getColumnSum(j);
 
-                        while (totalCount + (multiplier * value) == 0 || columnSum + (multiplier * value) == 0) {
-                            value = ThreadLocalRandom.current().nextInt(1, maxAttack);
+                        if (columnSum < 0) {
+                            choice = 0;
+                            multiplier = 1;
+                        } else {
+                            choice = 1;
+                            multiplier = -1;
+                        }
+
+                        /*
+                         * while (totalCount + (multiplier * value) == 0 || columnSum + (multiplier *
+                         * value) == 0) { value = ThreadLocalRandom.current().nextInt(1, maxAttack); }
+                         */
+                        for (int x = maxAttack - 1; x > 0; x--) {
+                            if (totalCount + (multiplier * x) != 0 && columnSum + (multiplier * x) != 0) {
+                                value = x;
+                            }
                         }
 
                     }
@@ -133,6 +147,20 @@ public class EquilibriumManager {
         return num;
     }
 
+    private static int max() {
+        int max = 0;
+
+        for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
+            for (int j = 0; j < NUMBER_OF_ELEMENTS; j++) {
+                if (equilibriumMatrix[i][j] > max) {
+                    max = equilibriumMatrix[i][j];
+                }
+            }
+        }
+
+        return max;
+    }
+
     public static void runTests(int numberOfTest) {
         int succesful = 0;
         int failed = 0;
@@ -140,7 +168,7 @@ public class EquilibriumManager {
         for (int i = 0; i < numberOfTest; i++) {
 
             calcEquilibrium();
-            if (getSum() == 0 && numberOfZeros() == NUMBER_OF_ELEMENTS) {
+            if (getSum() == 0 && numberOfZeros() == NUMBER_OF_ELEMENTS && max() <= V) {
                 succesful++;
             } else {
                 showMatrix();
@@ -166,6 +194,6 @@ public class EquilibriumManager {
         // calcEquilibrium();
         // showMatrix();
 
-        runTests(10000000);
+        runTests(1000000000);
     }
 }
