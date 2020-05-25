@@ -121,6 +121,10 @@ public class EquilibriumManager {
         return sum;
     }
 
+    public static int getDamage(Element el1, Element el2) {
+        return equilibriumMatrix[el1.ordinal()][el2.ordinal()];
+    }
+
     public static int getSum() {
         int sum = 0;
 
@@ -191,9 +195,11 @@ public class EquilibriumManager {
     }
 
     public static void main(String[] args) {
-        // calcEquilibrium();
-        // showMatrix();
+        calcEquilibrium();
+        showMatrix();
 
-        runTests(1000000000);
+        System.out.println(Element.WATER.getDamage(Element.WATER));
+
+        // runTests(1000000000);
     }
 }
