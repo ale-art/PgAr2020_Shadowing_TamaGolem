@@ -198,7 +198,7 @@ public class EquilibriumManager {
         calcEquilibrium();
         showMatrix();
 
-        System.out.println(Element.WATER.getDamage(Element.WATER));
+        System.out.println(Element.WATER.getDamage(Element.ROCK));
 
         // runTests(1000000000);
     }
