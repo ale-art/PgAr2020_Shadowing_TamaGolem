@@ -8,17 +8,17 @@ import java.util.Collection;
  * @author Simone
  *
  */
-public class TamaGolem implements Serializable{
+public class TamaGolem implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2110932066828491892L;
 
 	private static final String THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL = "The belly of the Tamagolem is full";
-	
+
 	/** The number of stones the {@linkplain TamaGolem} must have {@value} */
 	public final static byte P = 5;// QUESTO PARAMETRO E' DA DECIDERE ASSIEME
-	
+
 	/** Initial healt number {@value} */
 	public final static byte V = 10;// QUESTO PARAMETRO E' DA DECIDERE ASSIEME
 
@@ -42,7 +42,7 @@ public class TamaGolem implements Serializable{
 	 *             if the {@code array stones} passed, doesn't have the right number
 	 *             of elements({@value #P})
 	 */
-	public TamaGolem(ArrayList<Element> stones) {
+	public TamaGolem(Collection<Element> stones) {
 		setHealt(V);
 		setStones(stones);
 	}
@@ -91,10 +91,10 @@ public class TamaGolem implements Serializable{
 	 *             if the {@code array stones} passed, doesn't have the right number
 	 *             of elements({@value #P})
 	 */
-	private void setStones(ArrayList<Element> stones) {
+	private void setStones(Collection<Element> stones) {
 		if (stones.size() != P)
 			throw new IllegalArgumentException("There are too many / too few Elements in this Array");
-		this.stones = stones;
+		this.stones = (ArrayList<Element>) stones;
 	}
 
 	/**
@@ -130,13 +130,13 @@ public class TamaGolem implements Serializable{
 	 */
 
 	public boolean addStones(Collection<Element> stones) {
-		
-		if(this.stones.size()>=P)
+
+		if (this.stones.size() >= P)
 			throw new IllegalArgumentException(THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL);
-		
+
 		else if (stones.size() + this.stones.size() > TamaGolem.P)
 			throw new IllegalArgumentException("Too many stones passed, free slots = " + (P - this.stones.size()));
-		
+
 		return this.stones.addAll(stones);
 	}
 
@@ -179,29 +179,52 @@ public class TamaGolem implements Serializable{
 
 	@Override
 	public int hashCode() {
-		
+
 		return stones.hashCode();
 	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof TamaGolem) {
-			TamaGolem t=(TamaGolem) obj;
-			return getHealt()==t.getHealt()&&getStones().containsAll(t.getStones());
-					}
+		if (obj instanceof TamaGolem) {
+			TamaGolem t = (TamaGolem) obj;
+			return getHealt() == t.getHealt() && getStones().containsAll(t.getStones());
+		}
 		return false;
 	}
+
 	
-	@Override
+	/**
+	 * @return a <tt>String </TT>like
+	 *         <ul>
+	 *         This Tamagolem have these Stones in his belly<br>
+	 *         1 FIRE<br>
+	 *         2 WATER...<bR>
+	 *         ...<br>
+	 *         else if it empty, it will return "EMPTY"
+	 *         </ul>
+	 */
 	public String toString() {
-		StringBuilder elements= new StringBuilder();
-		int i=1;
+		StringBuilder elements = new StringBuilder();
+		int i = 1;
 		for (Element element : stones) {
 			elements.append(i);
 			elements.append('\t');
 			elements.append(element.toString());
 			i++;
 		}
-		return String.format("This Tamagolem have the these Stones in his belly%n%s",elements.toString());
+		if (elements.length() == 0)
+			elements.append("EMPTY");
+		return String.format("This Tamagolem have these Stones in his belly%n%s", elements.toString());
+	}
+
+	/**
+	 * <b>Metods</b> that say if the {@linkplain TamaGolem} is <b>{@code DIE}</b>
+	 * 
+	 * @return true if the {@link #healt} equals {@value #MIN_HEALT}, false
+	 *         otherwise
+	 */
+	public boolean isDie() {
+		return getHealt() == MIN_HEALT;
 	}
 
 }
