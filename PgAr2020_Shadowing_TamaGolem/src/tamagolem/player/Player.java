@@ -6,10 +6,15 @@ public class Player {
 
 	private String name;
 
-	public final static int G = 5;// PARAMETRO DA DECIDERE ASSIEME
+	/**
+	 * using the provided formula to calculate G: |(N-1)*(N-2)/P*2| N is given: 5 P
+	 * is calculated in TamaGolem Class
+	 * 
+	 * 
+	 */
+	public final static int G = 2;
 
-
-	public Player( String name) {
+	public Player(String name) {
 		super();
 		this.currentGolem = G;
 		this.name = name;
@@ -23,6 +28,13 @@ public class Player {
 	}
 
 	/**
+	 * set the number of TamaGolem
+	 */
+	public void setCurrentGolem(int currentGolem) {
+		this.currentGolem = currentGolem;
+	}
+
+	/**
 	 * @return the name
 	 */
 	public String getName() {
@@ -30,8 +42,7 @@ public class Player {
 	}
 
 	/**
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;

@@ -16,16 +16,20 @@ public class TamaGolem implements Serializable {
 
 	private static final String THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL = "The belly of the Tamagolem is full";
 
-	/** The number of stones the {@linkplain TamaGolem} must have {@value} */
-	public final static byte P = 5;// QUESTO PARAMETRO E' DA DECIDERE ASSIEME
+	/**
+	 * The number of stones the {@linkplain TamaGolem} must have {@value} calculated
+	 * by the following formula P=|(N+1)/3|+1, N is given =5
+	 * 
+	 */
+	public final static byte P = 3;
 
-	/** Initial healt number {@value} */
+	/** Initial health number {@value} */
 	public final static byte V = 10;// QUESTO PARAMETRO E' DA DECIDERE ASSIEME
 
-	public final static byte MIN_HEALT = 0;
+	public final static byte MIN_HEALTH = 0;
 
-	/** <b>Attribute</B> The {@linkplain TamaGolem} healt */
-	private int healt;
+	/** <b>Attribute</B> The {@linkplain TamaGolem} health */
+	private int health;
 
 	/**
 	 * <b>Attribute</B> It is an {@linkplain ArrayList} containing the
@@ -35,44 +39,43 @@ public class TamaGolem implements Serializable {
 
 	/**
 	 * <b>Constructor</B> <br>
-	 * set {@link #healt} = {@value #V} <br>
+	 * set {@link #health} = {@value #V} <br>
 	 * set {@link #stones} {@code array attribute} = {@code stones array passed}
 	 * 
-	 * @throws IllegalArgumentException
-	 *             if the {@code array stones} passed, doesn't have the right number
-	 *             of elements({@value #P})
+	 * @throws IllegalArgumentException if the {@code array stones} passed, doesn't
+	 *                                  have the right number of
+	 *                                  elements({@value #P})
 	 */
 	public TamaGolem(Collection<Element> stones) {
-		setHealt(V);
+		setHealth(V);
 		setStones(stones);
 	}
 
 	/**
 	 * <b>DEFAULT Constructor</B> <br>
-	 * set {@link #healt}={@value #V} & the {@link #stones} array is set
+	 * set {@link #health}={@value #V} & the {@link #stones} array is set
 	 * {@code Empty}
 	 */
 	public TamaGolem() {
-		setHealt(V);
+		setHealth(V);
 		this.stones = new ArrayList<>(P);
 	}
 
 	/**
-	 * @return the healt
+	 * @return the health
 	 */
-	public int getHealt() {
-		return healt;
+	public int getHealth() {
+		return health;
 	}
 
 	/**
-	 * @param healt
-	 *            the healt to set
+	 * @param healt the health to set
 	 */
-	private void setHealt(int healt) {
-		if (healt < TamaGolem.MIN_HEALT || healt > TamaGolem.V)
+	public void setHealth(int health) {
+		if (health < TamaGolem.MIN_HEALTH || health > TamaGolem.V)
 			throw new IllegalArgumentException(
-					String.format("Life cannot be set >%d or <%d", TamaGolem.V, TamaGolem.MIN_HEALT));
-		this.healt = healt;
+					String.format("Life cannot be set >%d or <%d", TamaGolem.V, TamaGolem.MIN_HEALTH));
+		this.health = health;
 	}
 
 	/**
@@ -83,13 +86,12 @@ public class TamaGolem implements Serializable {
 	}
 
 	/**
-	 * <b>Metod</B> that set {@link #stones} attribute to the {@code stones} passed
+	 * <b>Method</B> that set {@link #stones} attribute to the {@code stones} passed
 	 * 
-	 * @param stones
-	 *            the stone to set
-	 * @throws IllegalArgumentException
-	 *             if the {@code array stones} passed, doesn't have the right number
-	 *             of elements({@value #P})
+	 * @param stones the stone to set
+	 * @throws IllegalArgumentException if the {@code array stones} passed, doesn't
+	 *                                  have the right number of
+	 *                                  elements({@value #P})
 	 */
 	private void setStones(Collection<Element> stones) {
 		if (stones.size() != P)
@@ -98,14 +100,12 @@ public class TamaGolem implements Serializable {
 	}
 
 	/**
-	 * <b>Metod</B> Add an {@linkplain Element} to the {@link #stones} attribute
+	 * <b>Method</B> Add an {@linkplain Element} to the {@link #stones} attribute
 	 * 
-	 * @param stone
-	 *            the {@linkplain Element} to add
-	 * @throws IllegalArgumentException
-	 *             if the {@link #stones} are already full (<b>MAX SIZE</B> is
-	 *             {@value #P})
-	 * @return true if the Element is add succesfully to the {@link #stones} array,
+	 * @param stone the {@linkplain Element} to add
+	 * @throws IllegalArgumentException if the {@link #stones} are already full
+	 *                                  (<b>MAX SIZE</B> is {@value #P})
+	 * @return true if the Element is add successfully to the {@link #stones} array,
 	 *         false otherwise
 	 */
 	public boolean addStone(Element stone) {
@@ -115,16 +115,14 @@ public class TamaGolem implements Serializable {
 	}
 
 	/**
-	 * <b>Metod</B> Add more {@linkplain Element}s to the {@link #stones} attribute
+	 * <b>Method</B> Add more {@linkplain Element}s to the {@link #stones} attribute
 	 * 
-	 * @param stones
-	 *            the {@linkplain Element}s to add
-	 * @throws IllegalArgumentException
-	 *             if the {@link #stones} are already full (<b>MAX SIZE</B> is
-	 *             {@value #P})
-	 * @throws IllegalArgumentException
-	 *             if the number of elements passed and the numbers of elements
-	 *             present in {@link #stones} is greater than {@value #P}
+	 * @param stones the {@linkplain Element}s to add
+	 * @throws IllegalArgumentException if the {@link #stones} are already full
+	 *                                  (<b>MAX SIZE</B> is {@value #P})
+	 * @throws IllegalArgumentException if the number of elements passed and the
+	 *                                  numbers of elements present in
+	 *                                  {@link #stones} is greater than {@value #P}
 	 * @return true if the Element is add succesfully to the {@link #stones} array,
 	 *         false otherwise
 	 */
@@ -144,10 +142,9 @@ public class TamaGolem implements Serializable {
 	 * @return the {@linkplain Element} of the {@link #stones} in the specified
 	 *         position <br>
 	 *         (remember, the <tt>first Element</tt> is at {@code index}=<b>0</B>)
-	 * @param index
-	 *            index of the element to return
-	 * @throws IndexOutOfBoundsException
-	 *             if the index is out of range(index < 0 || index >= {@value #P})
+	 * @param index index of the element to return
+	 * @throws IndexOutOfBoundsException if the index is out of range(index < 0 ||
+	 *                                   index >= {@value #P})
 	 * 
 	 */
 	public Element getElement(int index) {
@@ -155,26 +152,26 @@ public class TamaGolem implements Serializable {
 	}
 
 	/**
-	 * <b>Method </B>that lowers the {@link #healt} of a {@linkplain TamaGolem}.<br>
+	 * <b>Method </B>that lowers the {@link #health} of a
+	 * {@linkplain TamaGolem}.<br>
 	 * If {@code howMuchLowerIt} is a positive number, it will subtract it from the
-	 * current <b>{@code healt}</b>;<br>
+	 * current <b>{@code health}</b>;<br>
 	 * else if {@code howMuchLowerIt} is a negative number, it will add up to the
-	 * current <b>{@code healt}</b>
+	 * current <b>{@code health}</b>
 	 * 
-	 * @param howMuchLowerIt
-	 *            is how much to lower the {@link #healt}
-	 * @return the new <b>{@code healt}</b>
+	 * @param howMuchLowerIt is how much to lower the {@link #health}
+	 * @return the new <b>{@code health}</b>
 	 * @author Simone
 	 */
 	public int lowerTheLife(int howMuchLowerIt) {
 		if (howMuchLowerIt < 0)
 			howMuchLowerIt = Math.abs(howMuchLowerIt);
 		try {
-			setHealt(getHealt() - howMuchLowerIt);
+			setHealth(getHealth() - howMuchLowerIt);
 		} catch (IllegalArgumentException e) {
-			setHealt(TamaGolem.MIN_HEALT);
+			setHealth(TamaGolem.MIN_HEALTH);
 		}
-		return getHealt();
+		return getHealth();
 	}
 
 	@Override
@@ -187,14 +184,13 @@ public class TamaGolem implements Serializable {
 	public boolean equals(Object obj) {
 		if (obj instanceof TamaGolem) {
 			TamaGolem t = (TamaGolem) obj;
-			return getHealt() == t.getHealt() && getStones().containsAll(t.getStones());
+			return getHealth() == t.getHealth() && getStones().containsAll(t.getStones());
 		}
 		return false;
 	}
 
-	
 	/**
-	 * @return a <tt>String </TT>like
+	 * @return a <tt>String </TT>such as
 	 *         <ul>
 	 *         This Tamagolem have these Stones in his belly<br>
 	 *         1 FIRE<br>
@@ -218,13 +214,13 @@ public class TamaGolem implements Serializable {
 	}
 
 	/**
-	 * <b>Metods</b> that say if the {@linkplain TamaGolem} is <b>{@code DIE}</b>
+	 * <b>Methods</b> that say if the {@linkplain TamaGolem} is <b>{@code DIE}</b>
 	 * 
-	 * @return true if the {@link #healt} equals {@value #MIN_HEALT}, false
+	 * @return true if the {@link #health} equals {@value #MIN_HEALTH}, false
 	 *         otherwise
 	 */
 	public boolean isDie() {
-		return getHealt() == MIN_HEALT;
+		return getHealth() == MIN_HEALTH;
 	}
 
 }

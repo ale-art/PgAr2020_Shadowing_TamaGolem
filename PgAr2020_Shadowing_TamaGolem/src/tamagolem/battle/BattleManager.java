@@ -1,8 +1,14 @@
 package tamagolem.battle;
 
+import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 import tamagolem.Element;
-
+import tamagolem.player.Player;
+/**
+ * 
+ * @author Alessandra
+ *
+ */
 public class BattleManager {
 
 	private MyMenu mainMenu;
@@ -14,10 +20,6 @@ public class BattleManager {
 		this.battleMenu = new MyMenu("Chose between avaible rocks",
 				new String[] { "Water", "Fire", "Grass", "Rock", "Steel" });
 	}
-//
-//	private void startProgram() {
-//		this.useMainMenu();
-//	}
 
 	private void useMainMenu() {
 		int choice;
@@ -33,6 +35,12 @@ public class BattleManager {
 		} while (choice != 0);
 
 	}
+
+	private String setNames() {
+		String name=InputDati.leggiStringaNonVuota("Enter your name...");
+		return name;
+		
+}
 
 	public void menuElement() {
 		int choice;
@@ -66,8 +74,9 @@ public class BattleManager {
 		} catch (NullPointerException e) {
 			e.getMessage();
 		}
-		
+
 	}
+
 	private void addGrass() {
 		try {
 			this.battle.addGrassElement();
@@ -75,6 +84,7 @@ public class BattleManager {
 			e.getMessage();
 		}
 	}
+
 	private void addFire() {
 
 		try {
@@ -94,6 +104,8 @@ public class BattleManager {
 	}
 
 	public void startBattle() {
+		String player1Name=this.setNames();
+		String player2Name=this.setNames();
 		try {
 			this.battle.startBattle();
 		} catch (NullPointerException e) {
