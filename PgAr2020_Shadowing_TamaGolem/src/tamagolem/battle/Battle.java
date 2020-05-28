@@ -16,7 +16,7 @@ import tamagolem.player.Player;
  */
 public class Battle {
 
-	private static final int NUMBER_OF_ELEMENTS = 5;
+	private static final int NUMBER_OF_ELEMENTS = Element.N;
 	private static final int ROCKS = TamaGolem.P;
 	private static final int NUMBERS_OF_TAMAGOLEM = Player.G;
 	private int S;
@@ -52,7 +52,7 @@ public class Battle {
 	 * set {@link #S} calculated by the following formula <br>
 	 * {@link #S} =|(G*P*2)/N|*N <br>
 	 * 
-	 * set {@link #N} = {@value #NUMBER_OF_ELEMENTS}<br>
+	 * set N = {@link #NUMBER_OF_ELEMENTS}<br>
 	 * {@link #G} is calculated in {@link #Player}<br>
 	 * {@link #P} is calculated in {@link #TamaGolem} <br>
 	 * 
@@ -60,8 +60,8 @@ public class Battle {
 	 * @return numbers of stone in the sack
 	 */
 	public int setS() {
-		int s;
-		return s = ((int) Math.ceil(Double.valueOf((2 * NUMBERS_OF_TAMAGOLEM * this.ROCKS)) / (NUMBER_OF_ELEMENTS)))
+	
+		return ((int) Math.ceil(Double.valueOf((2 * NUMBERS_OF_TAMAGOLEM * ROCKS)) / (NUMBER_OF_ELEMENTS)))
 				* NUMBER_OF_ELEMENTS;
 	}
 
@@ -125,7 +125,7 @@ public class Battle {
 	 * @return player without a TamaGolem otherwise null
 	 */
 	public Player removeTamaGolem(Player player) {
-		player.setCurrentGolem(player.getCurrentGolem() - 1);
+		player.aTamaDie();
 		if (!player.hasLost()) {
 			return player;
 		} else {

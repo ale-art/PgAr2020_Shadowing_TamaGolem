@@ -46,7 +46,7 @@ public class TamaGolem implements Serializable {
 	 * 
 	 * @throws IllegalArgumentException
 	 *             if the {@code array stones} passed, doesn't have the right number
-	 *             of elements({@value #P})
+	 *             of elements({@link #P})
 	 */
 	public TamaGolem(Collection<Element> stones) {
 		setHealth(V);
@@ -95,7 +95,7 @@ public class TamaGolem implements Serializable {
 	 *            the stone to set
 	 * @throws IllegalArgumentException
 	 *             if the {@code array stones} passed, doesn't have the right number
-	 *             of elements({@value #P})
+	 *             of elements({@link #P})
 	 */
 	private void setStones(Collection<Element> stones) {
 		if (stones.size() != P)
@@ -110,7 +110,7 @@ public class TamaGolem implements Serializable {
 	 *            the {@linkplain Element} to add
 	 * @throws IllegalArgumentException
 	 *             if the {@link #stones} are already full (<b>MAX SIZE</B> is
-	 *             {@value #P})
+	 *             {@link  #P})
 	 * @return true if the Element is add successfully to the {@link #stones} array,
 	 *         false otherwise
 	 */
@@ -127,10 +127,10 @@ public class TamaGolem implements Serializable {
 	 *            the {@linkplain Element}s to add
 	 * @throws IllegalArgumentException
 	 *             if the {@link #stones} are already full (<b>MAX SIZE</B> is
-	 *             {@value #P})
+	 *             {@link  #P})
 	 * @throws IllegalArgumentException
 	 *             if the number of elements passed and the numbers of elements
-	 *             present in {@link #stones} is greater than {@value #P}
+	 *             present in {@link #stones} is greater than {@link  #P}
 	 * @return true if the Element is add succesfully to the {@link #stones} array,
 	 *         false otherwise
 	 */
@@ -153,7 +153,7 @@ public class TamaGolem implements Serializable {
 	 * @param index
 	 *            index of the element to return
 	 * @throws IndexOutOfBoundsException
-	 *             if the index is out of range(index < 0 || index >= {@value #P})
+	 *             if the index is out of range(index < 0 || index >= {@link #P})
 	 * 
 	 */
 	public Element getElement(int index) {
@@ -199,14 +199,14 @@ public class TamaGolem implements Serializable {
 		return false;
 	}
 
-	/**
+	/**<b>toString</B>
 	 * @return a <tt>String </TT>such as
 	 *         <ul>
 	 *         This Tamagolem have these Stones in his belly<br>
 	 *         1 FIRE<br>
 	 *         2 WATER...<bR>
 	 *         ...<br>
-	 *         else if it empty, it will return "EMPTY"
+	 *         else if it is empty, it will return "EMPTY"
 	 *         </ul>
 	 */
 	public String toString() {
