@@ -1,5 +1,8 @@
 package tamagolem.player;
 
+import tamagolem.Element;
+import tamagolem.TamaGolem;
+
 public class Player {
 
 	private int currentGolem;
@@ -7,12 +10,13 @@ public class Player {
 	private String name;
 
 	/**
-	 * using the provided formula to calculate G: |(N-1)*(N-2)/P*2| N is given: 5 P
-	 * is calculated in TamaGolem Class
+	 * using the provided formula to calculate <b>{@code G}</B>=
+	 * ⎡({@linkplain Element#N} - 1)*({@linkplain Element#N} - 2) / (2 *
+	 * {@linkplain TamaGolem#P})⎤.
 	 * 
 	 * 
 	 */
-	public final static int G = 2;
+	public final static byte G = (byte) Math.ceil((Element.N-1)*(Element.N-2)/(2*TamaGolem.P));
 
 	public Player(String name) {
 		super();
@@ -42,7 +46,8 @@ public class Player {
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
 	public void setName(String name) {
 		this.name = name;
