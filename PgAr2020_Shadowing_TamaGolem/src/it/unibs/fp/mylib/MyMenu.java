@@ -36,7 +36,10 @@ public class MyMenu {
 		stampaMenuConX();
 		return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);
 	}
-
+	public int scegliSenzaUscita() {
+		stampaMenuSenzaUscita();
+		return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 0, voci.length);
+	}
 	public void stampaMenu() {
 		System.out.println(stampaCornice());
 		System.out.println(titolo);
@@ -64,7 +67,15 @@ public class MyMenu {
 		System.out.println(VOCE_USCITA);
 		System.out.println();
 	}
-
+	public void stampaMenuSenzaUscita() {
+		System.out.println(stampaCornice());
+		System.out.println(titolo);
+		System.out.println(stampaCornice());
+		for (int i = 0; i < voci.length; i++) {
+			System.out.println((i + 1) + "\t" + voci[i]);
+		}
+	
+	}
 	private String stampaCornice() {
 		StringBuilder c = new StringBuilder();
 		for (int i = 0; i <= titolo.length(); i++) {

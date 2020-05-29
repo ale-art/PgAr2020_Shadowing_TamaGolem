@@ -8,6 +8,7 @@ public enum Element {
     public int getDamage(Element versusWho) {
         return EquilibriumManager.getDamage(this, versusWho);
     }
-    /**Number of element */
-    public static final byte N=(byte) Element.values().length;
+
+    /** Number of element */
+    public static final byte N = (byte) Element.values().length;
 }

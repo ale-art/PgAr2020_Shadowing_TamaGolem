@@ -28,7 +28,7 @@ public class Player {
 	 */
 	public Player(String name) {
 		super();
-		setCurrenGolem(G);
+		setCurrentGolem(G);
 		setName(name);
 	}
 
@@ -46,7 +46,7 @@ public class Player {
 		return name;
 	}
 
-	private void setCurrenGolem(int currentGolem) {
+	private void setCurrentGolem(int currentGolem) {
 		if (currentGolem < 0 || currentGolem > G)
 			throw new IllegalArgumentException(
 					String.format("The Player's TamaGolems number cannot be set >%d or <%d", G, 0));
@@ -59,10 +59,11 @@ public class Player {
 	 * @throws IllegalArgumentException
 	 *             if the name is an empty {@linkplain String}
 	 */
-	private void setName(String name) {
+	public void setName(String name) {
 		name = name.trim();
 		if (name.length() > 0)
 			this.name = name;
+		else
 		throw new IllegalArgumentException("The name cannot be empty");
 	}
 
@@ -84,9 +85,9 @@ public class Player {
 	public int aTamaDie() {
 
 		try {
-			setCurrenGolem(getCurrentGolem() - 1);
+			setCurrentGolem(getCurrentGolem() - 1);
 		} catch (IllegalArgumentException e) {
-			setCurrenGolem(0);
+			setCurrentGolem(0);
 		}
 		return getCurrentGolem();
 	}

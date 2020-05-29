@@ -2,6 +2,7 @@ package tamagolem;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @author Simone
@@ -9,7 +10,7 @@ import java.util.Collection;
  */
 public class TamaGolem  {
 	
-	private static final String THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL = "The belly of the Tamagolem is full";
+private static final String THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL = "The belly of the Tamagolem is full";
 
 	/**
 	 * The number of stones the {@linkplain TamaGolem} must have <br>
@@ -126,7 +127,7 @@ public class TamaGolem  {
 	 * @throws IllegalArgumentException
 	 *             if the number of elements passed and the numbers of elements
 	 *             present in {@link #stones} is greater than {@link  #P}
-	 * @return true if the Element is add succesfully to the {@link #stones} array,
+	 * @return true if the Element is add successfully to the {@link #stones} array,
 	 *         false otherwise
 	 */
 
