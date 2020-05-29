@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import tamagolem.Element;
 
 public class EquilibriumManager {
-    private static final int NUMBER_OF_ELEMENTS = Element.values().length;
+    private static final int NUMBER_OF_ELEMENTS = Element.N;
     private static final int V = 10;
 
     private static int[][] equilibriumMatrix = new int[NUMBER_OF_ELEMENTS][NUMBER_OF_ELEMENTS];
