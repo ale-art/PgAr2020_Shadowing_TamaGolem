@@ -4,6 +4,7 @@ import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 import tamagolem.Element;
 import tamagolem.player.Player;
+
 /**
  * 
  * @author Alessandra
@@ -11,16 +12,24 @@ import tamagolem.player.Player;
  */
 public class BattleManager {
 
+	private static final String NEW_PLAY = "Start a new play";
+	private static final String WELCOME = "Welcome to TamaGolemPlay";
+	private static final String ENTER_NAME = "Enter your name...";
 	private MyMenu mainMenu;
-	private static MyMenu battleMenu;
-	private Battle battle;
 
+	/**
+	 * <b>Constructor</B> <br>
+	 * 
+	 * 
+	 */
 	public BattleManager() {
-		this.mainMenu = new MyMenu("Welcome to TamaGolemPlay", new String[] { "Start a new play" });
-		this.battleMenu = new MyMenu("Chose between avaible rocks",
-				new String[] { "Water", "Fire", "Grass", "Rock", "Steel" });
+		this.mainMenu = new MyMenu(WELCOME, new String[] { NEW_PLAY });
 	}
 
+	/**
+	 * <b>Method</B> <br>
+	 * manage to start a new {@link #battle}
+	 */
 	private void useMainMenu() {
 		int choice;
 		do {
@@ -36,81 +45,34 @@ public class BattleManager {
 
 	}
 
+	/**
+	 * <b>Method</B> <br>
+	 * to start the battle inserting <br>
+	 * {@link player.name}<br>
+	 * 
+	 * @return the {@code String} name <br>
+	 * 
+	 */
 	private String setNames() {
-		String name=InputDati.leggiStringaNonVuota("Enter your name...");
+		String name = InputDati.leggiStringaNonVuota(ENTER_NAME);
 		return name;
-		
-}
-
-	public void menuElement() {
-		int choice;
-		do {
-			choice = this.battleMenu.scegli();
-			switch (choice) {
-			case 1:
-				this.addWater();
-				break;
-			case 2:
-				this.addFire();
-				break;
-			case 3:
-				this.addGrass();
-				break;
-			case 4:
-				this.addRock();
-				break;
-			case 5:
-				return Element.STEEL;
-			case 0:
-				System.out.println("You must choose an element");
-				choice = 6;
-			}
-		} while (choice != 0);
-	}
-
-	private void addRock() {
-		try {
-			this.battle.addRockElement();
-		} catch (NullPointerException e) {
-			e.getMessage();
-		}
 
 	}
 
-	private void addGrass() {
-		try {
-			this.battle.addGrassElement();
-		} catch (NullPointerException e) {
-			e.getMessage();
-		}
-	}
-
-	private void addFire() {
-
-		try {
-			this.battle.addFireElement();
-		} catch (NullPointerException e) {
-			e.getMessage();
-		}
-	}
-
-	private void addWater() {
-		try {
-			this.battle.addWaterElement();
-		} catch (NullPointerException e) {
-			e.getMessage();
-		}
-
-	}
-
+	/**
+	 * <b>Method</B>
+	 * starting a new {@linkplain Battle} until an exception is caught the battle
+	 * goes on
+	 * 
+	 */
 	public void startBattle() {
-		String player1Name=this.setNames();
-		String player2Name=this.setNames();
+		Battle b = new Battle(new Player(this.setNames()), new Player(this.setNames()));
 		try {
-			this.battle.startBattle();
+			b.startBattle();
+
 		} catch (NullPointerException e) {
 			e.getMessage();
-			this.battle.declareWinner();
+			b.declareWinner();
 			this.useMainMenu();
 		}
 	}

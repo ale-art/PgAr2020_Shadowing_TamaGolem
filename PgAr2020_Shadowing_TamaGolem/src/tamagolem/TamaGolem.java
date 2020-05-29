@@ -3,12 +3,13 @@ package tamagolem;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * @author Simone
  *
  */
-public class TamaGolem implements Serializable {
+public class TamaGolem implements Serializable{
 	/**
 	 * 
 	 */
@@ -131,7 +132,7 @@ public class TamaGolem implements Serializable {
 	 * @throws IllegalArgumentException
 	 *             if the number of elements passed and the numbers of elements
 	 *             present in {@link #stones} is greater than {@link  #P}
-	 * @return true if the Element is add succesfully to the {@link #stones} array,
+	 * @return true if the Element is add successfully to the {@link #stones} array,
 	 *         false otherwise
 	 */
 
