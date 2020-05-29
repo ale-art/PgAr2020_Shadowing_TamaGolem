@@ -84,6 +84,7 @@ public class EquilibriumManager {
                         for (int x = maxAttack - 1; x > 0; x--) {
                             if (totalCount + (multiplier * x) != 0 && columnSum + (multiplier * x) != 0) {
                                 value = x;
+                                break;
                             }
                         }
 
@@ -195,11 +196,11 @@ public class EquilibriumManager {
     }
 
     public static void main(String[] args) {
-        calcEquilibrium();
-        showMatrix();
+        // calcEquilibrium();
+        // showMatrix();
 
-        System.out.println(Element.WATER.getDamage(Element.ROCK));
+        // System.out.println(Element.WATER.getDamage(Element.ROCK));
 
-        // runTests(1000000000);
+        runTests(10000000);
     }
 }
