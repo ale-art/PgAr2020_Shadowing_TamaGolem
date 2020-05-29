@@ -26,7 +26,14 @@ public class EquilibriumManager {
      * Shows on the CMD the equilibrium matrix
      */
     public static void showMatrix() {
+        System.out.print("\t");
         for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
+            System.out.print(Element.values()[i] + "\t");
+        }
+        System.out.print("\n\n");
+
+        for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
+            System.out.print(Element.values()[i] + "\t");
             for (int j = 0; j < NUMBER_OF_ELEMENTS; j++) {
                 System.out.print(equilibriumMatrix[i][j] + "\t");
             }
