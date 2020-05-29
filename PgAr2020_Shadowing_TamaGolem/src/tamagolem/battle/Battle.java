@@ -307,12 +307,17 @@ public class Battle {
 
 	public static void startMatch() {
 		System.out.println("Welcome on a new match!");
-	
+
 		Player player1 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the first player: "));
-		Player player2 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the second player: "));
-	
+		String name2 = InputDati.leggiStringaNonVuota("Insert the name of the second player: ");
+		while ((player1.getName().equalsIgnoreCase(name2))) {
+			System.out.println("\nName insert is the same as player 1 name, rinsert");
+			name2 = InputDati.leggiStringaNonVuota("Insert the name of the second player: ");
+		}
+		Player player2 = new Player(name2);
+
 		Battle battle = new Battle(player1, player2);
-	
+
 		EquilibriumManager.calcEquilibrium();
 		battle.startBattle();
 	}
