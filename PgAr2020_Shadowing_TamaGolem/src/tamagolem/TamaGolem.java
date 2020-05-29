@@ -209,7 +209,7 @@ private static final String THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL = "The belly of t
 		}
 		if (elements.length() == 0)
 			elements.append("EMPTY");
-		return String.format("This Tamagolem have these Stones in his belly%n%s", elements.toString());
+		return String.format("%nThis Tamagolem have these Stones in his belly%n%s", elements.toString());
 	}
 
 	/**

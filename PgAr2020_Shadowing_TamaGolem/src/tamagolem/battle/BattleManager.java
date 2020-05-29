@@ -1,9 +1,9 @@
 package tamagolem.battle;
 
-import it.unibs.fp.mylib.InputDati;
-import it.unibs.fp.mylib.MyMenu;
 import tamagolem.Element;
 import tamagolem.player.Player;
+import util.mylib.InputDati;
+import util.mylib.MyMenu;
 
 /**
  * 
@@ -54,15 +54,12 @@ public class BattleManager {
 	 * 
 	 */
 	private String setNames() {
-		String name = InputDati.leggiStringaNonVuota(ENTER_NAME);
-		return name;
-
+		return InputDati.leggiStringaNonVuota(ENTER_NAME);
 	}
 
 	/**
-	 * <b>Method</B>
-	 * starting a new {@linkplain Battle} until an exception is caught the battle
-	 * goes on
+	 * <b>Method</B> starting a new {@linkplain Battle} until an exception is caught
+	 * the battle goes on
 	 * 
 	 */
 	public void startBattle() {

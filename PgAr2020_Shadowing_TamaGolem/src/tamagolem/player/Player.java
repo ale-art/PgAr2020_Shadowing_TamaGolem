@@ -29,7 +29,7 @@ public class Player {
 	public Player(String name) {
 		super();
 		setCurrentGolem(G);
-		setName(name);
+		setName(name.toUpperCase());
 	}
 
 	/**

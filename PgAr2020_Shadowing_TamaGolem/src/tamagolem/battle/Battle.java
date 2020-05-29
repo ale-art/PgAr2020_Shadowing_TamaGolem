@@ -3,12 +3,14 @@ package tamagolem.battle;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import it.unibs.fp.mylib.InputDati;
-import it.unibs.fp.mylib.MyMenu;
+
 import tamagolem.Element;
 import tamagolem.TamaGolem;
 import tamagolem.equilibrium.EquilibriumManager;
 import tamagolem.player.Player;
+import util.mylib.BelleStringhe;
+import util.mylib.InputDati;
+import util.mylib.MyMenu;
 
 /**
  * 
@@ -20,7 +22,7 @@ public class Battle {
 	private static final String NONO_HURT = "The element are equals, none has been hurt";
 	private static final String DEAD_MESSAGE = "Your TamaGolem is dead";
 	private static final String CHANGE = "You must change TamaGolem";
-	private static final String DAMAGED_TAMAGOLEM = "!  Your TamaGolem has been hurt, the damage is:";
+	private static final String DAMAGED_TAMAGOLEM = "%s!  Your TamaGolem has been hurt, the damage is: %d";
 	private static final String SET_STONES = "  set the stones in your TamaGolem";
 	private static final String NO_MORE_TAMAGOLEM = "No more Tamagolem";
 	private static final String WON = "has won";
@@ -63,7 +65,7 @@ public class Battle {
 	public Battle(Player player1, Player player2) {
 		S = this.setS();
 		numElement = this.setNumElement();
-		
+
 		this.player1 = player1;
 		this.player2 = player2;
 	}
@@ -83,8 +85,8 @@ public class Battle {
 	 * @return the number of elements pro type in the {@link #sack}
 	 */
 	private int setNumElement() {
-		int num = this.S / Element.N;
-		return num;
+		return this.S / Element.N;
+		
 	}
 
 	/**
@@ -124,8 +126,9 @@ public class Battle {
 	/**
 	 * <b>Method</B> starting the battle with the first evocation<br>
 	 * 
-	 * @throws {@code NullPointerException } when one of the two players has no more
-	 *                {@linkplain TamaGolem} <br>
+	 * @throws {@code
+	 *             NullPointerException } when one of the two players has no more
+	 *             {@linkplain TamaGolem} <br>
 	 *
 	 */
 	public void startBattle() {
@@ -140,9 +143,7 @@ public class Battle {
 				} while (!t1.isDie() && !t2.isDie());
 				if (t1.isDie()) {
 					// remove and evocation of a new tamagolem
-					this.removeTamaGolem(this.player1);
-
-					if (player1.hasLost()) {
+					if (this.removeTamaGolem(this.player1) == null) {
 						exit = true;
 					} else {
 						System.out.println(CHANGE);
@@ -151,9 +152,7 @@ public class Battle {
 
 				} else {
 					// remove and evocation of a new tamagolem
-					this.removeTamaGolem(player2);
-
-					if (player2.hasLost()) {
+					if (this.removeTamaGolem(player2) == null){
 						exit = true;
 					} else {
 						System.out.println(CHANGE);
@@ -182,9 +181,9 @@ public class Battle {
 
 		do {
 			error = false;
-			System.out.println(FRAME_NAME);
-			System.out.println(player.getName().toUpperCase() + SET_STONES);
-			System.out.println(FRAME_NAME);
+			
+			System.out.println(BelleStringhe.stampaStringaCorniceCentrato(player.getName()+ SET_STONES, BelleStringhe.GRADO));
+			
 			this.setStones(t);
 
 			if (foeElements != null && foeElements.equals(t.getStones())) {
@@ -245,17 +244,18 @@ public class Battle {
 		for (int i = 0; i < 3; i++) {
 			Element element1 = t1.getElement(i);
 			Element element2 = t2.getElement(i);
+			System.out.println(String.format("%s VS %s%n", element1.toString(),element2.toString()));
 			int damage = EquilibriumManager.getDamage(element1, element2);
 			if (damage == 0) {
 				System.out.println(NONO_HURT);
 
 			} else if (damage < 0) {
 				t1.lowerTheLife(damage);
-				System.out.println(this.player1.getName() + DAMAGED_TAMAGOLEM + Math.abs(damage));
+				System.out.println(String.format(DAMAGED_TAMAGOLEM , this.player1.getName(),Math.abs(damage) ));
 			} else {
 
 				t2.lowerTheLife(damage);
-				System.out.println(this.player2.getName() + DAMAGED_TAMAGOLEM + damage);
+				System.out.println(String.format(DAMAGED_TAMAGOLEM , this.player2.getName(),Math.abs(damage)));
 			}
 		}
 	}
@@ -337,9 +337,9 @@ public class Battle {
 			choose = menu.scegli();
 
 			switch (choose) {
-				case 1:
-					startMatch();
-					break;
+			case 1:
+				startMatch();
+				break;
 			}
 
 		} while (choose != 0);

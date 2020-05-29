@@ -1,4 +1,4 @@
-package it.unibs.fp.mylib;
+package util.mylib;
 
 public class MyMath{
 	private static final int POWER_2 = 2;

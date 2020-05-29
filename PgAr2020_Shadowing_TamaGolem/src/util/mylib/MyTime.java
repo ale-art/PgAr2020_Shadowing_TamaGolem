@@ -1,4 +1,4 @@
-package it.unibs.fp.mylib;
+package util.mylib;
 
 import java.util.concurrent.TimeUnit;
 
