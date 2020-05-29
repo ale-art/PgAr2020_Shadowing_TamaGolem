@@ -62,7 +62,7 @@ public class Battle {
 	public Battle(Player player1, Player player2) {
 		S = this.setS();
 		numElement = this.setNumElement();
-		this.sack = sack;
+		
 		this.player1 = player1;
 		this.player2 = player2;
 	}
@@ -103,11 +103,6 @@ public class Battle {
 		this.setSack(elements);
 	}
 
-	@Deprecated
-	public int getS() {
-		return S;
-	}
-
 	/**
 	 * <b>Method</B> <br>
 	 * set {@link #S} calculated by the following formula <br>
@@ -134,8 +129,8 @@ public class Battle {
 	 */
 	public void startBattle() {
 		this.initialSack();
-		TamaGolem t1 = this.evocation(this.player1);
-		TamaGolem t2 = this.evocation(this.player2);
+		TamaGolem t1 = this.evocation(this.player1, null);
+		TamaGolem t2 = this.evocation(this.player2, t1.getStones());
 		boolean exit = false;
 		try {
 			do {
@@ -146,12 +141,12 @@ public class Battle {
 					// remove and evocation of a new tamagolem
 					this.removeTamaGolem(this.player1);
 					System.out.println(CHANGE);
-					t1 = this.evocation(this.player1);
+					t1 = this.evocation(this.player1, t2.getStones());
 				} else {
 					// remove and evocation of a new tamagolem
 					this.removeTamaGolem(player2);
 					System.out.println(CHANGE);
-					t2 = this.evocation(this.player2);
+					t2 = this.evocation(this.player2, t1.getStones());
 				}
 			} while (!exit);
 		} catch (NullPointerException e) {
@@ -166,12 +161,27 @@ public class Battle {
 	 * @param player
 	 * @return the TamaGolem
 	 */
-	public TamaGolem evocation(Player player) {
+	public TamaGolem evocation(Player player, ArrayList<Element> foeElements) {
 		TamaGolem t = new TamaGolem();
-		System.out.println(FRAME_NAME);
-		System.out.println(player.getName().toUpperCase() + SET_STONES);
-		System.out.println(FRAME_NAME);
-		this.setStones(t);
+
+		boolean error = false;
+
+		do {
+			error = false;
+			System.out.println(FRAME_NAME);
+			System.out.println(player.getName().toUpperCase() + SET_STONES);
+			System.out.println(FRAME_NAME);
+			this.setStones(t);
+
+			if (foeElements != null && foeElements.equals(t.getStones())) {
+				error = true;
+				this.sack.addAll(t.getStones());
+				t.resetStones();
+				// Aggiungere eccezione o messaggio d'errore
+			}
+
+		} while (error);
+
 		System.out.println(t.toString());
 		return t;
 	}
@@ -185,10 +195,10 @@ public class Battle {
 	private void setStones(TamaGolem tamagolem) {
 		for (int i = 0; i < TamaGolem.P; i++) {
 			try {
-			this.addSingleStone(tamagolem);
-			}catch(NullPointerException exception) {
-				exception.getMessage();
 				this.addSingleStone(tamagolem);
+			} catch (NullPointerException exception) {
+				System.out.println(exception.getMessage());
+				i--;
 			}
 		}
 	}
@@ -203,14 +213,11 @@ public class Battle {
 	public void addSingleStone(TamaGolem tamagolem) {
 
 		Element element = BattleUtils.readElement();
-		try {
-			this.checkSack(element);
-		} catch (NullPointerException exception) {
+		if (this.checkSack(element) == null) {
 			throw new NullPointerException("No avaible element,please reinsert");
-		}finally {
-			tamagolem.addStone(element);
-			this.removeElement(element);
 		}
+		tamagolem.addStone(element);
+		this.removeElement(element);
 	}
 
 	/**
@@ -237,13 +244,6 @@ public class Battle {
 				System.out.println(this.player2.getName() + DAMAGED_TAMAGOLEM + damage);
 			}
 		}
-	}
-
-	public static void main(String args[]) {
-		Player player1 = new Player("pippo");
-		Player player2 = new Player("pino");
-		Battle b = new Battle(player1, player2);
-		b.startBattle();
 	}
 
 	/**
@@ -300,5 +300,12 @@ public class Battle {
 			System.out.println(this.player2.getName() + LOST);
 			System.out.println(this.player1.getName() + WON);
 		}
+	}
+
+	public static void main(String args[]) {
+		Player player1 = new Player("pippo");
+		Player player2 = new Player("pino");
+		Battle b = new Battle(player1, player2);
+		b.startBattle();
 	}
 }
