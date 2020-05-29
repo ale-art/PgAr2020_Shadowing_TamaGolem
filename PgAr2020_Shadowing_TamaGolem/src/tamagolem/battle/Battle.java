@@ -33,6 +33,7 @@ public class Battle {
 	 * {@linkplain Player} and the second {@linkplain Player}
 	 */
 	private static final int S = setS();
+	private static final String VARIABLES = BelleStringhe.stampaStringaCorniceCentrato(String.format("MOST IMPORTANT VARIABLES :%nN = %d%nG = %d%nP = %d%nS = %d%nV = %d%n", Element.N,Player.G,TamaGolem.P,Battle.S,TamaGolem.V));
 
 	/**
 	 * <b>Attribute</b> <br>
@@ -89,11 +90,9 @@ public class Battle {
 	private static ArrayList<Element> initialSack() {
 		ArrayList<Element> elements = new ArrayList<Element>();
 		for (int i = 0; i < numElement; i++) {
-			elements.add(Element.WATER);
-			elements.add(Element.FIRE);
-			elements.add(Element.GRASS);
-			elements.add(Element.STEEL);
-			elements.add(Element.ROCK);
+			for (int j = 0; j < Element.N; j++) {
+				elements.add(Element.values()[j]);
+			}
 		}
 		return (elements);
 	}
@@ -247,6 +246,7 @@ public class Battle {
 				t1.lowerTheLife(damage);
 				outPut.append(String.format("%s VS %s%n%n", element1.toString(), element2.toString()));
 				outPut.append(String.format(DAMAGED_TAMAGOLEM + "%n", player1.getName(), damage));
+				outPut.append(String.format("Current Life : %d/%d%n", t1.getHealth(), TamaGolem.V));
 
 			} else {
 
@@ -254,6 +254,8 @@ public class Battle {
 				outPut.append(String.format("%s VS %s%n%n", element2.toString(), element1.toString()));
 
 				outPut.append(String.format(DAMAGED_TAMAGOLEM + "%n", player2.getName(), -damage));
+				outPut.append(String.format("Current Life : %d/%d%n", t2.getHealth(), TamaGolem.V));
+
 			}
 			InputDati.isInvioPremuto(BelleStringhe.stampaStringaCorniceCentrato(outPut.toString()),
 					OutputArray.PROSSIMO_ELEMENTO);
@@ -319,6 +321,7 @@ public class Battle {
 		Battle battle = new Battle(player1, player2);
 
 		EquilibriumManager.calcEquilibrium();
+		System.out.println(VARIABLES);
 		battle.startBattle();
 	}
 

@@ -75,11 +75,11 @@ public class BelleStringhe {
 	public static String stampaStringaCorniceCentrato(String titolo, char segnoCornice) {
 		String titoloCentrato = BelleStringhe.stampaStringCentrato(titolo);
 		int lunghezzaMassima = lunghezzaMassimaString(titolo);
-		StringBuilder fine = new StringBuilder(BelleStringhe.stampaCornice(lunghezzaMassima, BelleStringhe.GRADO));
+		StringBuilder fine = new StringBuilder(BelleStringhe.stampaCornice(lunghezzaMassima, segnoCornice));
 		fine.append(ACAPO);
 		fine.append(titoloCentrato);
 		fine.append(ACAPO);
-		fine.append(BelleStringhe.stampaCornice(lunghezzaMassima, BelleStringhe.GRADO));
+		fine.append(BelleStringhe.stampaCornice(lunghezzaMassima, segnoCornice));
 		fine.append(ACAPO);
 		return fine.toString();
 	}

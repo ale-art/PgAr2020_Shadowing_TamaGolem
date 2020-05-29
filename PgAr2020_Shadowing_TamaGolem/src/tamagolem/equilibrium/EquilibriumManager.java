@@ -39,7 +39,7 @@ public class EquilibriumManager {
             }
 
             System.out.print("\n\n");
-        }
+        } 
     }
 
     /**
