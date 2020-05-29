@@ -15,13 +15,16 @@ import tamagolem.player.Player;
  *
  */
 public class Battle {
-	
 
+	private static final String NONO_HURT = "The element are equals, none has been hurt";
+	private static final String DEAD_MESSAGE = "Your TamaGolem is dead";
+	private static final String CHANGE = "You must change TamaGolem";
+	private static final String DAMAGED_TAMAGOLEM = "!  Your TamaGolem has been hurt, the damage is:";
 	private static final String SET_STONES = "  set the stones in your TamaGolem";
 	private static final String NO_MORE_TAMAGOLEM = "No more Tamagolem";
 	private static final String WON = "has won";
 	private static final String LOST = "has lost";
-	private static final String FRAME_NAME="vvvvvvvvvvvv";
+	private static final String FRAME_NAME = "vvvvvvvvvvvv";
 	/**
 	 * <b> Attribute</B> <br>
 	 * the number of stones in the common supply shared between the first
@@ -59,9 +62,17 @@ public class Battle {
 	public Battle(Player player1, Player player2) {
 		S = this.setS();
 		numElement = this.setNumElement();
-		this.sack = initialSack();
+		this.sack = sack;
 		this.player1 = player1;
 		this.player2 = player2;
+	}
+
+	public ArrayList<Element> getSack() {
+		return sack;
+	}
+
+	public void setSack(ArrayList<Element> sack) {
+		this.sack = sack;
 	}
 
 	/**
@@ -78,9 +89,9 @@ public class Battle {
 	/**
 	 * set the common supply at the beginning of the {@linkplain Battle}
 	 * 
-	 * @return an arraylist of elements
+	 * @return an {@code ArrayList} of elements
 	 */
-	private ArrayList<Element> initialSack() {
+	private void initialSack() {
 		ArrayList<Element> elements = new ArrayList<Element>();
 		for (int i = 0; i < 3; i++) {
 			elements.add(Element.WATER);
@@ -89,7 +100,7 @@ public class Battle {
 			elements.add(Element.STEEL);
 			elements.add(Element.ROCK);
 		}
-		return elements;
+		this.setSack(elements);
 	}
 
 	@Deprecated
@@ -122,17 +133,27 @@ public class Battle {
 	 *
 	 */
 	public void startBattle() {
+		this.initialSack();
 		TamaGolem t1 = this.evocation(this.player1);
 		TamaGolem t2 = this.evocation(this.player2);
+		boolean exit = false;
 		try {
 			do {
-				this.singleBattle(t1, t2);
-			} while (t1.isDie() || t2.isDie());
-			if (t1.isDie()) {
-				this.removeTamaGolem(player1);
-			} else {
-				this.removeTamaGolem(player2);
-			}
+				do {
+					this.singleBattle(t1, t2);
+				} while (!t1.isDie() && !t2.isDie());
+				if (t1.isDie()) {
+					// remove and evocation of a new tamagolem
+					this.removeTamaGolem(this.player1);
+					System.out.println(CHANGE);
+					t1 = this.evocation(this.player1);
+				} else {
+					// remove and evocation of a new tamagolem
+					this.removeTamaGolem(player2);
+					System.out.println(CHANGE);
+					t2 = this.evocation(this.player2);
+				}
+			} while (!exit);
 		} catch (NullPointerException e) {
 			throw new NullPointerException(NO_MORE_TAMAGOLEM);
 		}
@@ -163,7 +184,12 @@ public class Battle {
 	 */
 	private void setStones(TamaGolem tamagolem) {
 		for (int i = 0; i < TamaGolem.P; i++) {
-			addSingleStone(tamagolem);
+			try {
+			this.addSingleStone(tamagolem);
+			}catch(NullPointerException exception) {
+				exception.getMessage();
+				this.addSingleStone(tamagolem);
+			}
 		}
 	}
 
@@ -180,8 +206,8 @@ public class Battle {
 		try {
 			this.checkSack(element);
 		} catch (NullPointerException exception) {
-			throw new NullPointerException("No avaible element");
-		} finally {
+			throw new NullPointerException("No avaible element,please reinsert");
+		}finally {
 			tamagolem.addStone(element);
 			this.removeElement(element);
 		}
@@ -195,20 +221,26 @@ public class Battle {
 	 * @param t2
 	 */
 	public void singleBattle(TamaGolem t1, TamaGolem t2) {
-		//mi serve un metodo per memorizzare la posizione su un dato elemento!!
-		//da sostituire i
-		Element element1 = t1.getElement(i);
-		Element element2 = t2.getElement(i);
-		int damage = EquilibriumManager.getDamage(element1, element2);
-		if (damage < 0) {
-			t1.lowerTheLife(damage);
-		} else {
-			t2.lowerTheLife(damage);
+		for (int i = 0; i < 3; i++) {
+			Element element1 = t1.getElement(i);
+			Element element2 = t2.getElement(i);
+			int damage = EquilibriumManager.getDamage(element1, element2);
+			if (damage == 0) {
+				System.out.println(NONO_HURT);
+
+			} else if (damage < 0) {
+				t1.lowerTheLife(damage);
+				System.out.println(this.player1.getName() + DAMAGED_TAMAGOLEM + Math.abs(damage));
+			} else {
+
+				t2.lowerTheLife(damage);
+				System.out.println(this.player2.getName() + DAMAGED_TAMAGOLEM + damage);
+			}
 		}
 	}
 
 	public static void main(String args[]) {
-		Player player1 = new Player("gino");
+		Player player1 = new Player("pippo");
 		Player player2 = new Player("pino");
 		Battle b = new Battle(player1, player2);
 		b.startBattle();
@@ -222,6 +254,7 @@ public class Battle {
 	 * @return player without a TamaGolem otherwise null
 	 */
 	public Player removeTamaGolem(Player player) {
+		System.out.println(DEAD_MESSAGE);
 		player.aTamaDie();
 		if (!player.hasLost()) {
 			return player;
