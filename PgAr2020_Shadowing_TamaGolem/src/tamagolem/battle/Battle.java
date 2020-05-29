@@ -63,7 +63,7 @@ public class Battle {
 	public Battle(Player player1, Player player2) {
 		S = this.setS();
 		numElement = this.setNumElement();
-		this.sack = sack;
+		
 		this.player1 = player1;
 		this.player2 = player2;
 	}
@@ -102,11 +102,6 @@ public class Battle {
 			elements.add(Element.ROCK);
 		}
 		this.setSack(elements);
-	}
-
-	@Deprecated
-	public int getS() {
-		return S;
 	}
 
 	/**

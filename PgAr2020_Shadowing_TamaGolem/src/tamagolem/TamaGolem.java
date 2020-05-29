@@ -1,6 +1,5 @@
 package tamagolem;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -9,13 +8,9 @@ import java.util.Iterator;
  * @author Simone
  *
  */
-public class TamaGolem implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2110932066828491892L;
-
-	private static final String THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL = "The belly of the Tamagolem is full";
+public class TamaGolem  {
+	
+private static final String THE_BELLY_OF_THE_TAMAGOLEM_IS_FULL = "The belly of the Tamagolem is full";
 
 	/**
 	 * The number of stones the {@linkplain TamaGolem} must have <br>
@@ -209,8 +204,7 @@ public class TamaGolem implements Serializable {
 		int i = 1;
 		for (Element element : stones) {
 			elements.append(i);
-			elements.append('\t');
-			elements.append(element.toString());
+			elements.append(String.format("\t%s%n",element.toString()));
 			i++;
 		}
 		if (elements.length() == 0)
