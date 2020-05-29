@@ -3,6 +3,7 @@ package tamagolem.battle;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import it.unibs.fp.mylib.InputDati;
 import it.unibs.fp.mylib.MyMenu;
 import tamagolem.Element;
 import tamagolem.TamaGolem;
@@ -145,18 +146,31 @@ public class Battle {
 				if (t1.isDie()) {
 					// remove and evocation of a new tamagolem
 					this.removeTamaGolem(this.player1);
-					System.out.println(CHANGE);
-					t1 = this.evocation(this.player1, t2.getStones());
+
+					if (player1.hasLost()) {
+						exit = true;
+					} else {
+						System.out.println(CHANGE);
+						t1 = this.evocation(this.player1, t2.getStones());
+					}
+
 				} else {
 					// remove and evocation of a new tamagolem
 					this.removeTamaGolem(player2);
-					System.out.println(CHANGE);
-					t2 = this.evocation(this.player2, t1.getStones());
+
+					if (player2.hasLost()) {
+						exit = true;
+					} else {
+						System.out.println(CHANGE);
+						t2 = this.evocation(this.player2, t1.getStones());
+					}
 				}
 			} while (!exit);
 		} catch (NullPointerException e) {
 			throw new NullPointerException(NO_MORE_TAMAGOLEM);
 		}
+
+		this.declareWinner();
 	}
 
 	/**
@@ -299,18 +313,40 @@ public class Battle {
 	 */
 	public void declareWinner() {
 		if (this.player1.hasLost()) {
-			System.out.println(this.player1.getName() + LOST);
-			System.out.println(this.player2.getName() + WON);
+			System.out.println(this.player1.getName() + " " + LOST);
+			System.out.println(this.player2.getName() + " " + WON);
 		} else {
-			System.out.println(this.player2.getName() + LOST);
-			System.out.println(this.player1.getName() + WON);
+			System.out.println(this.player2.getName() + " " + LOST);
+			System.out.println(this.player1.getName() + " " + WON);
 		}
 	}
 
+	public static void startMatch() {
+		System.out.println("Welcome on a new match!");
+
+		Player player1 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the first player: "));
+		Player player2 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the second player: "));
+
+		Battle battle = new Battle(player1, player2);
+
+		EquilibriumManager.calcEquilibrium();
+		EquilibriumManager.showMatrix();
+		battle.startBattle();
+	}
+
 	public static void main(String args[]) {
-		Player player1 = new Player("pippo");
-		Player player2 = new Player("pino");
-		Battle b = new Battle(player1, player2);
-		b.startBattle();
+		MyMenu menu = new MyMenu("TAMAGOLEM", new String[] { "Start a new battle" });
+
+		int choose;
+		do {
+			choose = menu.scegli();
+
+			switch (choose) {
+				case 1:
+					startMatch();
+					break;
+			}
+
+		} while (choose != 0);
 	}
 }
