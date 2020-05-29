@@ -6,7 +6,7 @@ import java.util.Arrays;
  * @author Simone Giacomini*/
 public class OutputArray {
 	
-	private static final String PROSSIMO_ELEMENTO = "< Per visualizzare il prossimo elemento, premi invio >";
+	public static final String PROSSIMO_ELEMENTO = "< Press enter to see the next element >";
 /**Impossibile creare un istanza di questa classe*/
 	private OutputArray() {
 	}

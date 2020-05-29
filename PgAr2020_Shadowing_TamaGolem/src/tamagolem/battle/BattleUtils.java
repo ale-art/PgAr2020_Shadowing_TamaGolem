@@ -25,8 +25,8 @@ public class BattleUtils {
 		MyMenu<Element> battleMenu = new MyMenu<Element>("Avaible Element", Element.values());
 		int choice;
 		battleMenu.stampaMenu();
-		choice = (InputDati.leggiIntero("Choose an element > ", 1, Element.N));
+		choice = (InputDati.leggiIntero("\nChoose an element > ", 1, Element.N));
 		return Element.values()[choice - 1];
-
+		
 	}
 }

@@ -4,14 +4,15 @@ package util.mylib;
  * Questa classe rappresenta un menu testuale generico a piu' voci Si suppone
  * che la voce per uscire sia sempre associata alla scelta 0 e sia presentata in
  * fondo al menu
+ * 
  * @param <T>
  * 
  */
 
 public class MyMenu<T> {
 
-	protected final static String VOCE_USCITA = "0)\tEsci";
-	final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
+	final protected static String VOCE_USCITA = "0)\tExit";
+	final private static String RICHIESTA_INSERIMENTO = "Enter the number of the required option: ";
 	protected final static int LUNGHEZZA_RICHIESTA = RICHIESTA_INSERIMENTO.length();
 	private String titolo;
 	private T[] voci;
@@ -28,7 +29,7 @@ public class MyMenu<T> {
 	}
 
 	public void stampaMenu() {
-		System.out.println(BelleStringhe.incorniciaCentrato(getTitolo(),LUNGHEZZA_RICHIESTA));
+		System.out.println(BelleStringhe.incorniciaCentrato(getTitolo(), LUNGHEZZA_RICHIESTA));
 		for (int i = 0; i < voci.length; i++) {
 			System.out.println((i + 1) + ")\t" + voci[i]);
 		}
@@ -42,6 +43,5 @@ public class MyMenu<T> {
 	protected T[] getVoci() {
 		return voci;
 	}
-	
 
 }

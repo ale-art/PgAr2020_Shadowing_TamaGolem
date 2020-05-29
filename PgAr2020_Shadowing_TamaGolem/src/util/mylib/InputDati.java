@@ -6,15 +6,17 @@ import java.util.*;
 public class InputDati {
 	private static Scanner lettore = creaScanner();
 
-	private final static String ERRORE_FORMATO = "Attenzione: il dato inserito non e' nel formato corretto";
-	private final static String ERRORE_MINIMO = "Attenzione: e' richiesto un valore maggiore o uguale a ";
-	private final static String ERRORE_STRINGA_VUOTA = "Attenzione: non hai inserito alcun carattere";
-	private final static String ERRORE_MASSIMO = "Attenzione: e' richiesto un valore minore o uguale a ";
-	private final static String MESSAGGIO_AMMISSIBILI = "Attenzione: i caratteri ammissibili sono: ";
 
-	public final static char RISPOSTA_SI = 'S';
-	public final static char RISPOSTA_NO = 'N';
+	  private final static String ERRORE_FORMATO = "Error:the data format is not correct";
+	  private final static String ERRORE_MINIMO= "Error: the value must be higher than";
+	  private final static String ERRORE_STRINGA_VUOTA= "Error: you enter no char";
+	  private final static String ERRORE_MASSIMO= "Error: tha value must be lower than";
+	  private final static String MESSAGGIO_AMMISSIBILI= "Attention: the allowed chars are: ";
 
+	  private final static char RISPOSTA_SI='Y';
+	  private final static char RISPOSTA_NO='N';
+
+	  
 	private static Scanner creaScanner() {
 		Scanner creato = new Scanner(System.in);
 		creato.useDelimiter(System.getProperty("line.separator"));

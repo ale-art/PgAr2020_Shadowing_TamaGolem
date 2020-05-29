@@ -1,8 +1,6 @@
 package tamagolem.battle;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
 
 import tamagolem.Element;
 import tamagolem.TamaGolem;
@@ -10,7 +8,8 @@ import tamagolem.equilibrium.EquilibriumManager;
 import tamagolem.player.Player;
 import util.mylib.BelleStringhe;
 import util.mylib.InputDati;
-import util.mylib.MyMenu;
+
+import util.mylib.OutputArray;
 
 /**
  * 
@@ -19,41 +18,43 @@ import util.mylib.MyMenu;
  */
 public class Battle {
 
-	private static final String NONO_HURT = "The element are equals, none has been hurt";
+	private static final String NONE_HURT = "The element are equals, none has been hurt";
 	private static final String DEAD_MESSAGE = "Your TamaGolem is dead";
 	private static final String CHANGE = "You must change TamaGolem";
 	private static final String DAMAGED_TAMAGOLEM = "%s!  Your TamaGolem has been hurt, the damage is: %d";
-	private static final String SET_STONES = "  set the stones in your TamaGolem";
+	private static final String SET_STONES = " set the stones in your TamaGolem";
 	private static final String NO_MORE_TAMAGOLEM = "No more Tamagolem";
 	private static final String WON = "has won";
 	private static final String LOST = "has lost";
-	private static final String FRAME_NAME = "vvvvvvvvvvvv";
+
 	/**
 	 * <b> Attribute</B> <br>
 	 * the number of stones in the common supply shared between the first
 	 * {@linkplain Player} and the second {@linkplain Player}
 	 */
-	private int S;
-	/**
-	 * <b>Attribute</B> <br>
-	 * the common supply which contains {@link #S} stones
-	 */
-	private ArrayList<Element> sack;
+	private static final int S = setS();
+
 	/**
 	 * <b>Attribute</b> <br>
 	 * the number of stones per {@linkplain Element} in the common {@link #sack}
 	 * 
 	 */
-	private int numElement;
+	private static final int numElement = setNumElement();
+	/**
+	 * <b>Attribute</B> <br>
+	 * the common supply which contains {@link #S} stones
+	 */
+	private static ArrayList<Element> sack = initialSack();
+
 	/**
 	 * <b>Attribute</B> <br>
 	 * the first {@linkplain Player}
 	 */
-	private Player player1;
+	private static Player player1;
 	/**
 	 * <b>Attribute</B> the second {@linkplain Player}
 	 */
-	private Player player2;
+	private static Player player2;
 
 	/**
 	 * </b> Constructor</B> <br>
@@ -63,19 +64,8 @@ public class Battle {
 	 * @param player2
 	 */
 	public Battle(Player player1, Player player2) {
-		S = this.setS();
-		numElement = this.setNumElement();
-
-		this.player1 = player1;
-		this.player2 = player2;
-	}
-
-	public ArrayList<Element> getSack() {
-		return sack;
-	}
-
-	public void setSack(ArrayList<Element> sack) {
-		this.sack = sack;
+		Battle.player1 = player1;
+		Battle.player2 = player2;
 	}
 
 	/**
@@ -84,26 +74,28 @@ public class Battle {
 	 * 
 	 * @return the number of elements pro type in the {@link #sack}
 	 */
-	private int setNumElement() {
-		return this.S / Element.N;
-		
+	private static final int setNumElement() {
+		return S / Element.N;
+
 	}
 
 	/**
 	 * set the common supply at the beginning of the {@linkplain Battle}
 	 * 
+	 * @return
+	 * 
 	 * @return an {@code ArrayList} of elements
 	 */
-	private void initialSack() {
+	private static ArrayList<Element> initialSack() {
 		ArrayList<Element> elements = new ArrayList<Element>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < numElement; i++) {
 			elements.add(Element.WATER);
 			elements.add(Element.FIRE);
 			elements.add(Element.GRASS);
 			elements.add(Element.STEEL);
 			elements.add(Element.ROCK);
 		}
-		this.setSack(elements);
+		return (elements);
 	}
 
 	/**
@@ -118,9 +110,9 @@ public class Battle {
 	 *
 	 * @return numbers of stone in the sack
 	 */
-	public int setS() {
+	private static int setS() {
 
-		return ((int) Math.ceil(Double.valueOf((2 * Element.N * TamaGolem.P)) / (Element.N))) * Element.N;
+		return ((int) Math.ceil(Double.valueOf((2 * Player.G * TamaGolem.P)) / (Element.N))) * Element.N;
 	}
 
 	/**
@@ -132,9 +124,9 @@ public class Battle {
 	 *
 	 */
 	public void startBattle() {
-		this.initialSack();
-		TamaGolem t1 = this.evocation(this.player1, null);
-		TamaGolem t2 = this.evocation(this.player2, t1.getStones());
+
+		TamaGolem t1 = this.evocation(Battle.player1, null);
+		TamaGolem t2 = this.evocation(Battle.player2, t1.getStones());
 		boolean exit = false;
 		try {
 			do {
@@ -143,20 +135,20 @@ public class Battle {
 				} while (!t1.isDie() && !t2.isDie());
 				if (t1.isDie()) {
 					// remove and evocation of a new tamagolem
-					if (this.removeTamaGolem(this.player1) == null) {
+					if (this.removeTamaGolem(Battle.player1) == null) {
 						exit = true;
 					} else {
 						System.out.println(CHANGE);
-						t1 = this.evocation(this.player1, t2.getStones());
+						t1 = this.evocation(Battle.player1, t2.getStones());
 					}
 
 				} else {
 					// remove and evocation of a new tamagolem
-					if (this.removeTamaGolem(player2) == null){
+					if (this.removeTamaGolem(player2) == null) {
 						exit = true;
 					} else {
 						System.out.println(CHANGE);
-						t2 = this.evocation(this.player2, t1.getStones());
+						t2 = this.evocation(Battle.player2, t1.getStones());
 					}
 				}
 			} while (!exit);
@@ -164,7 +156,7 @@ public class Battle {
 			throw new NullPointerException(NO_MORE_TAMAGOLEM);
 		}
 
-		this.declareWinner();
+		Battle.declareWinner();
 	}
 
 	/**
@@ -181,21 +173,22 @@ public class Battle {
 
 		do {
 			error = false;
-			
-			System.out.println(BelleStringhe.stampaStringaCorniceCentrato(player.getName()+ SET_STONES, BelleStringhe.GRADO));
-			
+
+			System.out.println(
+					BelleStringhe.stampaStringaCorniceCentrato(player.getName() + SET_STONES, BelleStringhe.GRADO));
+
 			this.setStones(t);
 
 			if (foeElements != null && foeElements.equals(t.getStones())) {
 				error = true;
-				this.sack.addAll(t.getStones());
+				Battle.sack.addAll(t.getStones());
 				t.resetStones();
-				// Aggiungere eccezione o messaggio d'errore
+				System.out.println("WARNING! You cannot insert the same opponent's stone!");
 			}
 
 		} while (error);
 
-		System.out.println(t.toString());
+		System.out.println((t.toString()));
 		return t;
 	}
 
@@ -230,7 +223,7 @@ public class Battle {
 			throw new NullPointerException("No avaible element,please reinsert");
 		}
 		tamagolem.addStone(element);
-		this.removeElement(element);
+		Battle.removeElement(element);
 	}
 
 	/**
@@ -244,19 +237,28 @@ public class Battle {
 		for (int i = 0; i < 3; i++) {
 			Element element1 = t1.getElement(i);
 			Element element2 = t2.getElement(i);
-			System.out.println(String.format("%s VS %s%n", element1.toString(),element2.toString()));
+			StringBuilder outPut = new StringBuilder();
 			int damage = EquilibriumManager.getDamage(element1, element2);
 			if (damage == 0) {
-				System.out.println(NONO_HURT);
+				outPut.append(String.format("%s VS %s%n%n", element1.toString(), element2.toString()));
+				outPut.append(String.format(NONE_HURT + "%n"));
 
 			} else if (damage < 0) {
 				t1.lowerTheLife(damage);
-				System.out.println(String.format(DAMAGED_TAMAGOLEM , this.player1.getName(),Math.abs(damage) ));
+				outPut.append(String.format("%s VS %s%n%n", element1.toString(), element2.toString()));
+				outPut.append(String.format(DAMAGED_TAMAGOLEM + "%n", player1.getName(), damage));
+
 			} else {
 
 				t2.lowerTheLife(damage);
-				System.out.println(String.format(DAMAGED_TAMAGOLEM , this.player2.getName(),Math.abs(damage)));
+				outPut.append(String.format("%s VS %s%n%n", element2.toString(), element1.toString()));
+
+				outPut.append(String.format(DAMAGED_TAMAGOLEM + "%n", player2.getName(), -damage));
 			}
+			InputDati.isInvioPremuto(BelleStringhe.stampaStringaCorniceCentrato(outPut.toString()),
+					OutputArray.PROSSIMO_ELEMENTO);
+			if (t1.isDie() || t2.isDie())
+				return;
 		}
 	}
 
@@ -268,7 +270,8 @@ public class Battle {
 	 * @return player without a TamaGolem otherwise null
 	 */
 	public Player removeTamaGolem(Player player) {
-		System.out.println(DEAD_MESSAGE);
+		System.out.println(
+				BelleStringhe.stampaStringaCorniceCentrato(String.format("%s, %s", player.getName(), DEAD_MESSAGE)));
 		player.aTamaDie();
 		if (!player.hasLost()) {
 			return player;
@@ -283,8 +286,8 @@ public class Battle {
 	 * 
 	 * @param element
 	 */
-	private void removeElement(Element element) {
-		this.sack.remove(element);
+	private static void removeElement(Element element) {
+		Battle.sack.remove(element);
 	}
 
 	/**
@@ -294,7 +297,7 @@ public class Battle {
 	 * 
 	 */
 	public Element checkSack(Element element) {
-		for (Element elements : this.sack) {
+		for (Element elements : Battle.sack) {
 			if (elements.equals(element)) {
 				return element;
 			}
@@ -302,46 +305,33 @@ public class Battle {
 		return null;
 	}
 
+	public static void startMatch() {
+		System.out.println("Welcome on a new match!");
+	
+		Player player1 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the first player: "));
+		Player player2 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the second player: "));
+	
+		Battle battle = new Battle(player1, player2);
+	
+		EquilibriumManager.calcEquilibrium();
+		battle.startBattle();
+	}
+
 	/**
 	 * declare the winning {@linkplain Player} and the loser {@linkplain Player}
 	 * 
 	 */
-	public void declareWinner() {
-		if (this.player1.hasLost()) {
-			System.out.println(this.player1.getName() + " " + LOST);
-			System.out.println(this.player2.getName() + " " + WON);
+	public static void declareWinner() {
+		if (player1.hasLost()) {
+			String output = (String.format("%s %s%n", player1.getName(), LOST))
+					+ (String.format("%s %s", player2.getName(), WON));
+			System.out.println(BelleStringhe.stampaStringaCorniceCentrato(output, '§'));
 		} else {
-			System.out.println(this.player2.getName() + " " + LOST);
-			System.out.println(this.player1.getName() + " " + WON);
+			String output = (String.format("%s %s%n", player2.getName(), LOST))
+					+ (String.format("%s %s", player1.getName(), WON));
+			System.out.println(BelleStringhe.stampaStringaCorniceCentrato(output, '§'));
 		}
-	}
-
-	public static void startMatch() {
-		System.out.println("Welcome on a new match!");
-
-		Player player1 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the first player: "));
-		Player player2 = new Player(InputDati.leggiStringaNonVuota("Insert the name of the second player: "));
-
-		Battle battle = new Battle(player1, player2);
-
-		EquilibriumManager.calcEquilibrium();
 		EquilibriumManager.showMatrix();
-		battle.startBattle();
 	}
 
-	public static void main(String args[]) {
-		MyMenu menu = new MyMenu("TAMAGOLEM", new String[] { "Start a new battle" });
-
-		int choose;
-		do {
-			choose = menu.scegli();
-
-			switch (choose) {
-			case 1:
-				startMatch();
-				break;
-			}
-
-		} while (choose != 0);
-	}
 }
